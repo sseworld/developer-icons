@@ -35,28 +35,39 @@ const filteredIconsData =
 <Layout title="Icons | Developer Icons">
   <main class="w-full flex gap-4 h-full">
     <aside
-      class="w-1/4 max-w-[250px] h-full min-h-full border border-zinc-800 rounded-xl flex flex-col gap-2 text-zinc-400 p-3 sticky top-0"
+      class="w-1/4 max-w-[250px] h-full min-h-full border border-zinc-800 rounded-xl flex flex-col gap-2 text-zinc-400 p-3 sticky top-0 overflow-auto"
     >
       {
-        ["All", ...categoriesData].map((item) => (
-          <a
-            href={`${publicBaseUrl}/icons/${item.replace("DevOps & AI/ML", "DevOps").replaceAll(" ", "-")}`}
-          >
-            <Button
-              className={cn(
-                `w-full rounded-lg px-4 py-2 cursor-pointer justify-start`,
-                {
-                  "bg-transparent text-zinc-400 hover:bg-zinc-800":
-                    item
-                      .replace("DevOps & AI/ML", "DevOps")
-                      .replaceAll(" ", "-") !== category,
-                }
-              )}
+        ["All", ...categoriesData].map((item) => {
+          const isActiveCategory =
+            item.replace("DevOps & AI/ML", "DevOps").replaceAll(" ", "-") ===
+            category;
+          return (
+            <a
+              href={`${publicBaseUrl}/icons/${item.replace("DevOps & AI/ML", "DevOps").replaceAll(" ", "-")}`}
             >
-              {item}
-            </Button>
-          </a>
-        ))
+              <Button
+                className={cn(
+                  `w-full rounded-lg pl-4 pr-2 py-2 cursor-pointer justify-between`,
+                  {
+                    "dark:bg-transparent dark:text-zinc-400 dark:hover:bg-zinc-800":
+                      !isActiveCategory,
+                  }
+                )}
+              >
+                <span>{item}</span>
+                <span
+                  class={cn(
+                    "text-xs px-2 py-0.5 rounded-full bg-zinc-800/50 text-zinc-500 font-medium",
+                    { "text-zinc-300": isActiveCategory }
+                  )}
+                >
+                  10
+                </span>
+              </Button>
+            </a>
+          );
+        })
       }
     </aside>
 
